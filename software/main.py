@@ -2,8 +2,13 @@ import PySimpleGUI as sg
 # import requests
 from sms_api import send_sms
 from utils import verify
+import configparser
 
-SENDER = 'CentarNIT'
+
+config = configparser.ConfigParser()
+config.read('config.cfg')
+
+SENDER = os.environ.get('SENDER')
 
 layout = [[sg.Text('Enter contacts for messages: ')],
           [sg.Multiline(size=(40, 10), key='contacts')],
