@@ -8,7 +8,7 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config.cfg')
 
-SENDER = os.environ.get('SENDER')
+SENDER = os.environ.get('SENDER') or config['DEFAULT']['SENDER']
 
 layout = [[sg.Text('Enter contacts for messages: ')],
           [sg.Multiline(size=(40, 10), key='contacts')],
