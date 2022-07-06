@@ -30,13 +30,16 @@ while True:
         sent = 0
         errors = 0
         for number in contacts:
-            response = send_sms(SENDER, number, values["message"])
-
-            if not response['submitted']:
-                errors += 1
-                sg.popup_annoying(f'Greska, broj: {number}, detalji greske: {response}')
-            else:
-                sent +=1
+            response = send_sms(SENDER, number, values["message"].strip().replace(r'\n', ' '))
+            try:
+                if not response['submitted']:
+                    errors += 1
+                    sg.popup_annoying(f'Greska, broj: {number}, detalji greske: {response}')
+                else:
+                    sent +=1
+            except Exception as e:
+                sg.popup_annoying(response, e)
+                raise
 
         if errors:
             sg.popup_ok(f'SMS su poslati na {sent} brojeva i {errors} gresaka.')
